@@ -4,6 +4,23 @@ import math
 app = Flask(__name__)
 
 
+@app.route('/')
+def index():
+    return '<h1 align="center">Введите пример в адресную строку</h1>'
+
+
+@app.route('/<example>')
+def calculate(example):
+    e = re.match('-?[0-9]+[+-:*]-?[0-9]+', example)
+    c = re.match('cylinder[(]r=[0-9]+,h=[0-9]+[)]', example)
+    if e and len(e.group()) == len(example):
+        return '<h1 align="center">%s</h1>' % calculator(e)
+    if c and len(c.group()) == len(example):
+        return '<h2 align="center">%s</h2>' % cylinder_info(c)
+    return '<h1 align="center">Некорректный ввод!</h1>'
+
+
+
 def cylinder_info(c):
     ex = c.group()
     pi = math.pi
