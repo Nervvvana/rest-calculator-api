@@ -4,6 +4,21 @@ import math
 app = Flask(__name__)
 
 
+def cylinder_info(c):
+    ex = c.group()
+    pi = math.pi
+    radius = float(ex[11:ex.find(',')])
+    height = float(ex[ex.find('h') + 2: len(ex) - 1])
+    base_area = pi * radius * radius
+    side_area = 2 * pi * radius * height
+    full_area = 2 * base_area + side_area
+    volume = base_area * height
+    return ('Площадь основания цилиндра: %s<br>'
+           ' Площадь боковой поверхности цилиндра: %s<br>'
+           ' Общая площадь цилиндра: %s<br>'
+           ' Объём цилиндра: %s') % (base_area, side_area, full_area, volume)
+
+
 def calculator(e):
     ex = e.group()
     num1 = re.match('-?[0-9]+', ex).group()
